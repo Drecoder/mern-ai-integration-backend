@@ -46,4 +46,11 @@ const userSchema = new mongoose.Schema({
             ref: 'History',
         },
     ],
+}, {
+    timestamps: true,
 });
+
+//! Compile to form the model
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;
