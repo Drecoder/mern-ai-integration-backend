@@ -48,9 +48,57 @@ const bcrypt = require('bcryptjs');
          });
 });
     //------Logout-----
+    const login = asyncHandler( async (req, res) => {
+        console.log('Request Body:', req.body);
+ 
+        const { email, password } = req.body
+        //Validate
+        if(!email || !password) {
+            res.status(400)
+            throw new Error('Please enter all fields')
+        }
+ 
+        //Check the email is taken
+        const user = await User.findOne({ email });
+        console.log('User:', user)  
+        if(!user){
+            res.status(401)
+            throw new Error('Invalid email or password')
+        }
+        //Check the password
+        const isMatch = await bcrypt.compare(password, user?.password);
+ 
+        if(!isMatch){
+            res.status(400)
+            throw new Error('Invalid password')
+        }
+        //Generate a token (jwt)
+        const token =  jwt.sign({id: user._id}, process.env.JWT_SECRET, {
+            expiresIn: '3d', //Token will expire in 3 days
+        });
+        console.log(token);
+        //set the token in the cookie (http only)
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure:process.env.NODE_ENV === 'production', //set to true in production
+            sameSite:'strict', //set to strict in production
+            maxAge:  24 * 60 * 60 * 1000, //1 days
+        });
+        //send the user data
+        res.json({
+            status: 'success',
+            _id: user?._id,
+            message: 'Login was successful',
+            user: { 
+                username: user?.username, 
+                email: user?.email, 
+            },
+        });
+    });
     //------Profile-----
     //------Check user Auth Status
 
     module.exports = {
         register,
+        login,
     };
