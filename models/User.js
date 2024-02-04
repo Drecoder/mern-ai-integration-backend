@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 //Schema
 const userSchema = new mongoose.Schema({
-    userSchema: {   
+    username: {   
         type: String,
         required:true,
     },
-    emai: {
+    email: {
         type: String,
         required: true,
     },
@@ -14,9 +14,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    trialPeriods: { 
+        type: Number,
+        default: 3, //3 days
+    },
     trialActive: {
         type: Boolean,
-        required: true,     
+        required: true,   
+        default: false,
     },
     trialExpires: {
         type: Date,
