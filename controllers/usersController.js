@@ -103,6 +103,7 @@ const bcrypt = require('bcryptjs');
     });
     //------Profile-----
     const userProfile = asyncHandler( async (req, res) => {
+        console.log(req.user);
         const id = '65beedce906f2fb712870dd9';    
         const user = await User.findById(id).select('-password');
         if(user){
