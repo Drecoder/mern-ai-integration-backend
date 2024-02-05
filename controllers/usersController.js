@@ -102,10 +102,25 @@ const bcrypt = require('bcryptjs');
     res.status(200).json({message: "Logged out successfully"});
     });
     //------Profile-----
+    const userProfile = asyncHandler( async (req, res) => {
+        const id = '65beedce906f2fb712870dd9';    
+        const user = await User.findById(id).select('-password');
+        if(user){
+            res.status(200).json({
+                status: 'success',
+                user,
+            })
+        }
+        else{
+            res.status(404)
+            throw new Error('User not found')
+        }
+    });
     //------Check user Auth Status
 
     module.exports = {
         register,
         login,
         logout,
+        userProfile,
     };
