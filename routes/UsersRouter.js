@@ -3,7 +3,7 @@ const  {
     register, 
     login, 
     logout, 
-    userProfile 
+    userProfile
 } = require('../controllers/usersController');
 const isAuthenticated = require('../middleware/isAuthenticated');
 
@@ -13,5 +13,6 @@ usersRouter.post('/register', register);
 usersRouter.post('/login', login);
 usersRouter.post('/logout', logout);
 usersRouter.get('/profile', isAuthenticated, userProfile);
+
 
 module.exports = usersRouter;
