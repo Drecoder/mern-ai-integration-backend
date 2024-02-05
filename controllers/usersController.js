@@ -48,7 +48,7 @@ const bcrypt = require('bcryptjs');
             },
          });
 });
-    //------Logout-----
+    //------Login-----
     const login = asyncHandler( async (req, res) => {
         console.log('Request Body:', req.body);
  
@@ -96,10 +96,16 @@ const bcrypt = require('bcryptjs');
             },
         });
     });
+    //------Logout-----
+    const logout = asyncHandler( async (req, res) => {
+    res.cookie('token', '', {maxAge: 1});
+    res.status(200).json({message: "Logged out successfully"});
+    });
     //------Profile-----
     //------Check user Auth Status
 
     module.exports = {
         register,
         login,
+        logout,
     };
