@@ -1,5 +1,5 @@
 const express = require('express');
-const { openAIController } = require('../controllers');
+const { openAIController } = require('../controllers/openAIController');
 const isAuthenticated = require('../middleware/isAuthenticated');   
 const openAIRouter = express.Router();  
 

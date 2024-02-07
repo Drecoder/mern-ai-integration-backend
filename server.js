@@ -2,6 +2,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 require('dotenv').config(); // load environment variables
 const usersRouter = require('./routes/UsersRouter');
+const openAIController = require('./routes/openAIRouter');
 require('./utils/connectDB')(); // connect to the database
 const { errorHandler } = require('./middleware/errorMiddleware');
 const app = express();
@@ -13,7 +14,7 @@ app.use(cookieParser()); // parse cookie header
 
 //----Routes----
 app.use('/api/v1/users', usersRouter);
-
+app.use('/api/v1/openai', openAIController);
 // error handler middleware
 app.use(errorHandler); 
 
