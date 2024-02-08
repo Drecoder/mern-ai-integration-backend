@@ -31,14 +31,15 @@ const bcrypt = require('bcryptjs');
              username,
              email,
              password: hashedPassword,               
-         })
+         });
+
          //Add the date the trial will expire
          newUser.trialExpires = new Date(
              new Date().getTime() + newUser.trialPeriods * 24 * 60 * 60 * 1000
          );
+
          //Save the user
          await newUser.save();
- 
          res.json({
              status: 'success',
              message: 'Registration was successful',
@@ -104,8 +105,8 @@ const bcrypt = require('bcryptjs');
     //------Profile-----
     const userProfile = asyncHandler( async (req, res) => {
         console.log(req.user);
-        const id = '65beedce906f2fb712870dd9';    
-        const user = await User.findById(id).select('-password');
+          
+        const user = await User.findById(req?.user?.id).select('-password');
         if(user){
             res.status(200).json({
                 status: 'success',

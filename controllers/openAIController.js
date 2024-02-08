@@ -27,9 +27,14 @@ const newContent = await ContentHistory.create({
     user: req?.user?._id, 
     content,
 });
+
 // Push the content into the user
 const userFound = await User.findById(req?.user?._id);
 userFound.history.push(newContent?._id);
+
+// Updae the api Request count
+userFound.apiRequestCount += 1;
+
 await userFound.save(); // Save the user
 res.status(200).json(content);  // Sending the response data back to the client
  } catch (error) {
