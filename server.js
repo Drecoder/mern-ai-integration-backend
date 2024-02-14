@@ -1,5 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+
+const cors = require('cors');
 require('dotenv').config(); // load environment variables
 const usersRouter = require('./routes/UsersRouter');
 const openAIController = require('./routes/openAIRouter');
@@ -11,7 +13,8 @@ const PORT = process.env.PORT || 5000;
 // middleware
 app.use(express.json()); // parse JSON request body
 app.use(cookieParser()); // parse cookie header
-
+const corsOptions = { credentials: true, origin: 'http://localhost:3000' }
+app.use(cors(corsOptions));
 //----Routes----
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/openai', openAIController);
