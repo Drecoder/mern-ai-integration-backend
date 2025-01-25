@@ -1,18 +1,21 @@
 const express = require('express');
-const  { 
+const { 
     register, 
     login, 
     logout, 
-    userProfile
+    userProfile 
 } = require('../controllers/usersController');
-const isAuthenticated = require('../middleware/isAuthenticated');
+const { submitApplication } = require('../controllers/applicationController'); // Assuming you create this controller
 
 const usersRouter = express.Router();
 
+// User routes
 usersRouter.post('/register', register);
 usersRouter.post('/login', login);
 usersRouter.post('/logout', logout);
-usersRouter.get('/profile', isAuthenticated, userProfile);
+usersRouter.get('/profile', userProfile);
 
+// Application route (open to the public)
+usersRouter.post('/jobs/:serialNumber/apply', submitApplication); // No authentication required
 
 module.exports = usersRouter;
